@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="src/style.css">
     <title>Space Invaders</title>
 </head>
+
 <body>
     <section class="score-ui">
         <div>
@@ -17,8 +19,9 @@
 
     <section class="start-screen screen">
         <div>
-            <h1>Invação Alien</h1>
+            <h1>Space X em Invação Alien</h1>
             <button class="button-play">Começar</button>
+            <button class="button-play manual" id="openModalBtn" onclick="manualModal()">Instruções</button>
         </div>
 
         <span>Portfolio Danilo Miranda</span>
@@ -31,8 +34,28 @@
         </div>
     </section>
 
+
+    <section class="close-modal" id="modal-manual">
+        <!-- Modal -->
+        <div class="modal-overlay" id="modal">
+            <div class="modal-content" >
+                <h2 class="modal-title">Instruções</h2>
+                <p class="modal-doc">1. Use as teclas (<strong>A</strong> e <strong>D</strong>) para se movimentar.</p>
+                <p class="modal-doc">2. Use a Barra de espaço para disparar.</p>
+                <p class="modal-doc">3. Evite os obstáculos e colete pontos para aumentar sua pontuação.</p>
+                <button class="close-btn" id="closeModalBtn" onclick="closeModal()">Fechar</button>
+            </div>
+        </div>
+    </section>
+    
+   
+
     <canvas></canvas>
 
+
     <script type="module" src="src/index.js"></script>
+
+
 </body>
+
 </html>

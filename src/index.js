@@ -234,6 +234,9 @@ const gameOver = () => {
     showGameOverScreen();
 };
 
+ 
+
+
 const checkShootPlayer = () => {
     invadersProjectiles.some((projectile, index) => {
         if (player.hit(projectile)) {
@@ -409,35 +412,6 @@ addEventListener("keyup", (event) => {
     }
 });
 
-// addEventListener("mousedown", (event) => {
-//     if (event.button === 0) {
-//         clickMouse.shoot2.pressed = true;
-//         console.log("Disparo iniciado");
-//     }
-// })
-
-
-// function update() {
-//     if (clickMouse.shoot2.pressed) {
-//         // Aqui você pode colocar a lógica para disparar
-//         console.log("Disparando...");
-//         // Exemplo: criar um novo projétil, ou algo assim
-//     }
-
-//     // Chama a função update novamente no próximo quadro
-//     requestAnimationFrame(update);
-// }
-
-// // Inicia o loop de atualização
-// update();
-
-// document.addEventListener("mouseup", (event) => {
-//     if (event.button === 0) { // Verifica se o botão esquerdo do mouse foi solto
-//         clickMouse.shoot2.pressed = false;
-//         console.log("Disparo interrompido");
-//     }
-// });
-
 buttonPlay.addEventListener("click", () => {
     startScreen.remove();
     scoreUi.style.display = "block";
@@ -451,6 +425,29 @@ buttonPlay.addEventListener("click", () => {
         }
     }, 1000);
 });
+
+const modal = document.getElementById('modal-manual')
+const openModal = document.getElementById('openModalBtn')
+const closeModal = document.getElementById('closeModalBtn')
+
+openModal.addEventListener("click", open);
+
+closeModal.addEventListener("click", close);
+
+
+function open(){
+    modal.classList.remove('close-moodal')
+    modal.classList.add('show-modal')
+
+}
+
+function close(){
+    modal.classList.remove('show-modal')
+    modal.classList.add('close-moodal')
+}
+
+
+
 
 buttonRestart.addEventListener("click", restartGame);
 
