@@ -19,36 +19,45 @@ const buttonRestart = document.querySelector(".button-restart");
 
 gameOverScreen.remove();
 
+// Seleciona o elemento <canvas> e cria um contexto 2D para renderização
 const canvas = document.querySelector("canvas");
 const ctx = canvas.getContext("2d");
 
+// Define o tamanho do canvas para ocupar toda a janela
 canvas.width = innerWidth;
 canvas.height = innerHeight;
 
+// Desativa o suavizamento de imagem para obter uma aparência de pixels
 ctx.imageSmoothingEnabled = false;
 
+// Define o estado inicial do jogo como "START" (início)
 let currentState = GameState.START;
 
+// Inicializa os dados do jogo (pontuação, nível e recorde)
 const gameData = {
     score: 0,
     level: 1,
     high: 0,
 };
 
+// Atualiza a interface do usuário para mostrar os dados do jogo na tela
 const showGameData = () => {
     scoreElement.textContent = gameData.score;
     levelElement.textContent = gameData.level;
     highElement.textContent = gameData.high;
 };
 
+// Cria o objeto jogador com a posição inicial
 const player = new Player(canvas.width, canvas.height);
 
+// Arrays para armazenar estrelas, projéteis do jogador e dos invasores, partículas e obstáculos
 const stars = [];
 const playerProjectiles = [];
 const invadersProjectiles = [];
 const particles = [];
 const obstacles = [];
 
+// Inicializa os obstáculos na posição especificada
 const initObstacles = () => {
     const x = canvas.width / 2 - 50;
     const y = canvas.height - 250;
@@ -64,11 +73,13 @@ const initObstacles = () => {
 
 initObstacles();
 
+// Cria uma nova grade de invasores com dimensões aleatórias
 const grid = new Grid(
     Math.round(Math.random() * 9 + 1),
     Math.round(Math.random() * 9 + 1)
 );
 
+// Objeto para monitorar o estado das teclas do jogador
 const keys = {
     left: false,
     right: false,
@@ -78,12 +89,14 @@ const keys = {
     },
 };
 
+// Objeto para monitorar o clique do mouse para disparar
 const clickMouse = {
     shoot2: {
         pressed: false
     }
-}
+};
 
+// Função para incrementar a pontuação e atualizar o recorde
 const incrementScore = (value) => {
     gameData.score += value;
 
@@ -92,16 +105,19 @@ const incrementScore = (value) => {
     }
 };
 
+// Função para aumentar o nível do jogo
 const incrementLevel = () => {
     gameData.level += 1;
 };
 
+// Gera estrelas para o fundo do jogo
 const generateStars = () => {
     for (let i = 0; i < NUMBER_STARS; i += 1) {
         stars.push(new Star(canvas.width, canvas.height));
     }
 };
 
+// Desenha e atualiza a posição das estrelas
 const drawStars = () => {
     stars.forEach((star) => {
         star.draw(ctx);
@@ -109,6 +125,7 @@ const drawStars = () => {
     });
 };
 
+// Desenha e atualiza projéteis na tela
 const drawProjectiles = () => {
     const projectiles = [...playerProjectiles, ...invadersProjectiles];
 
@@ -118,6 +135,7 @@ const drawProjectiles = () => {
     });
 };
 
+// Desenha e atualiza partículas na tela
 const drawParticles = () => {
     particles.forEach((particle) => {
         particle.draw(ctx);
@@ -125,10 +143,12 @@ const drawParticles = () => {
     });
 };
 
+// Desenha os obstáculos na tela
 const drawObstacles = () => {
     obstacles.forEach((obstacle) => obstacle.draw(ctx));
 };
 
+// Remove projéteis fora da tela
 const clearProjectiles = () => {
     playerProjectiles.forEach((projectile, i) => {
         if (projectile.position.y <= 0) {
@@ -143,6 +163,7 @@ const clearProjectiles = () => {
     });
 };
 
+// Remove partículas com opacidade zero (não visíveis)
 const clearParticles = () => {
     particles.forEach((particle, i) => {
         if (particle.opacity <= 0) {
@@ -151,6 +172,7 @@ const clearParticles = () => {
     });
 };
 
+// Cria uma explosão de partículas em uma posição específica
 const createExplosion = (position, size, color) => {
     for (let i = 0; i < size; i += 1) {
         const particle = new Particle(
@@ -170,6 +192,7 @@ const createExplosion = (position, size, color) => {
     }
 };
 
+// Verifica se projéteis do jogador atingem invasores
 const checkShootInvaders = () => {
     grid.invaders.forEach((invader, invaderIndex) => {
         playerProjectiles.some((projectile, projectileIndex) => {
@@ -196,11 +219,13 @@ const checkShootInvaders = () => {
     });
 };
 
+// Mostra a tela de "Game Over"
 const showGameOverScreen = () => {
     document.body.append(gameOverScreen);
     gameOverScreen.classList.add("zoom-animation");
 };
 
+// Lógica para o "Game Over"
 const gameOver = () => {
     createExplosion(
         {
@@ -234,9 +259,7 @@ const gameOver = () => {
     showGameOverScreen();
 };
 
- 
-
-
+// Verifica se o jogador foi atingido pelos projéteis dos invasores
 const checkShootPlayer = () => {
     invadersProjectiles.some((projectile, index) => {
         if (player.hit(projectile)) {
@@ -248,6 +271,7 @@ const checkShootPlayer = () => {
     });
 };
 
+// Verifica se os projéteis atingiram obstáculos
 const checkShootObstacles = () => {
     obstacles.forEach((obstacle) => {
         playerProjectiles.some((projectile, index) => {
@@ -266,6 +290,7 @@ const checkShootObstacles = () => {
     });
 };
 
+// Verifica se os invasores colidiram com os obstáculos
 const checkInvadersCollidedObstacles = () => {
     obstacles.forEach((obstacle, i) => {
         grid.invaders.some((invader) => {
@@ -276,6 +301,7 @@ const checkInvadersCollidedObstacles = () => {
     });
 };
 
+// Verifica se o jogador colidiu com os invasores
 const checkPlayerCollidedInvaders = () => {
     grid.invaders.some((invader) => {
         if (
@@ -288,6 +314,7 @@ const checkPlayerCollidedInvaders = () => {
     });
 };
 
+// Cria uma nova grade de invasores se a anterior foi eliminada
 const spawnGrid = () => {
     if (grid.invaders.length === 0) {
         soundEffects.playNextLevelSound();
@@ -304,6 +331,7 @@ const spawnGrid = () => {
     }
 };
 
+// Loop principal do jogo, atualizando a tela constantemente
 const gameLoop = () => {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 

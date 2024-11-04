@@ -5,57 +5,76 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="src/style.css">
-    <title>Space Invaders</title>
+    <title>Space X em Space Invaders</title>
 </head>
 
 <body>
+
+    <!-- Seção de pontuação -->
     <section class="score-ui">
         <div>
+            <!-- Exibe a pontuação atual do jogador -->
             <span class="score">Score: <span>0</span></span>
+            <!-- Exibe o nível atual do jogador -->
             <span class="level">Nivel: <span>1</span></span>
+            <!-- Exibe o recorde de pontuação do jogador -->
             <span class="high">Recorde: <span>0</span></span>
         </div>
     </section>
 
+    <!-- Tela inicial do jogo -->
     <section class="start-screen screen">
         <div>
+            <!-- Título do jogo -->
             <h1>Space X em Invação Alien</h1>
-            <button class="button-play">Começar</button>
+            <!-- Botão para iniciar o jogo -->
+            <button class="button-play" id="playButton">Começar</button>
+            <!-- Botão para abrir o modal de instruções -->
             <button class="button-play manual" id="openModalBtn" onclick="manualModal()">Instruções</button>
         </div>
-
+        
+        <!-- Informações do portfólio do autor -->
         <span>Portfolio Danilo Miranda</span>
     </section>
 
+    <!-- Tela de game over -->
     <section class="game-over screen">
         <div>
+            <!-- Mensagem de fim de jogo -->
             <h1>Fim de Jogo</h1>
+            <!-- Botão para reiniciar o jogo -->
             <button class="button-restart">Recomeçar</button>
         </div>
     </section>
 
-
+    <!-- Modal de instruções -->
     <section class="close-modal" id="modal-manual">
-        <!-- Modal -->
+        <!-- Sobreposição do modal -->
         <div class="modal-overlay" id="modal">
-            <div class="modal-content" >
+            <!-- Conteúdo do modal -->
+            <div class="modal-content">
+                <!-- Título do modal -->
                 <h2 class="modal-title">Instruções</h2>
+                <!-- Instruções do jogo para o jogador -->
                 <p class="modal-doc">1. Use as teclas (<strong>A</strong> e <strong>D</strong>) para se movimentar.</p>
                 <p class="modal-doc">2. Use a Barra de espaço para disparar.</p>
                 <p class="modal-doc">3. Evite os obstáculos e colete pontos para aumentar sua pontuação.</p>
+                <!-- Botão para fechar o modal -->
                 <button class="close-btn" id="closeModalBtn" onclick="closeModal()">Fechar</button>
             </div>
         </div>
     </section>
-    
-   
 
+    <!-- Canvas onde o jogo será desenhado -->
     <canvas></canvas>
 
-
+    <!-- Script principal do jogo -->
     <script type="module" src="src/index.js"></script>
 
+    <!-- Elemento de áudio para a música de fundo -->
+    <audio id="player" src="src/assets/audios/background-sound.mp3" loop></audio>
 
 </body>
+
 
 </html>
