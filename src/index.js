@@ -476,6 +476,21 @@ function close(){
 
 
 
+  function isMobile() {
+    return /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+  }
+
+  if (isMobile()) {
+    document.body.innerHTML = ""; // limpa o conteúdo
+    document.write(`
+      <div class="aviso">
+        <h2>Aviso</h2>
+        <p>Este projeto não está disponível para acesso por dispositivos móveis. Por favor, acesse em um computador.</p>
+      </div>
+    `);
+    throw new Error("Acesso via celular bloqueado.");
+  }
+
 
 buttonRestart.addEventListener("click", restartGame);
 
